@@ -3,6 +3,7 @@ package com.ymelo.SmsWakeUp;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 /**
  * Created by yohann on 09/12/14.
@@ -27,7 +28,8 @@ public class SettingsActivity extends PreferenceActivity{
                         }
                     }
                 };
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
 
