@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+        <!--
+        Invisible activity will not appear in the app history
+        -->
         <activity android:name="InvisibleActivity"
                   android:label="@string/app_name"
                   android:excludeFromRecents="true"

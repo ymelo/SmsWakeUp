@@ -14,6 +14,9 @@ public class InvisibleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         screenTurnOn();
+        //Finish the activity in a handler (unfortunately we need to
+        //wait a little bit before finishing, so the screen can be turned
+        //on correctly
         mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
@@ -23,6 +26,9 @@ public class InvisibleActivity extends Activity {
 
     }
 
+    /**
+     * Helper method that turns the screen on
+     */
     public void screenTurnOn() {
         Log.d(TAG, "Turning screen on");
         Window window = getWindow();
