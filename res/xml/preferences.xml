@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="test" >
+        <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="prefSendReport"
+                android:summary="Turn screen on"
+                android:title="When a SMS is received, turn the screen on" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>
