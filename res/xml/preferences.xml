@@ -3,10 +3,10 @@
 
     <PreferenceCategory android:title="test" >
         <CheckBoxPreference
-                android:defaultValue="false"
-                android:key="prefSendReport"
-                android:summary="Turn screen on"
-                android:title="When a SMS is received, turn the screen on" >
+                android:defaultValue="true"
+                android:key="@string/pref_key_activated"
+                android:summary="@string/pref_turn_screen_on"
+                android:title="@string/pref_turn_screen_on_desc" >
         </CheckBoxPreference>
     </PreferenceCategory>
 

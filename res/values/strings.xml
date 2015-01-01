@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SmsWakeUp</string>
+    <string name="pref_key_activated">pref_key_activated</string>
+    <string name="pref_turn_screen_on">Turn screen on</string>
+    <string name="pref_turn_screen_on_desc">When a SMS is received, turn the screen on</string>
 </resources>
