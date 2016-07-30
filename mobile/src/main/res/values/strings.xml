@@ -62,4 +62,5 @@
     <string name="pref_key_activated">pref_key_activated</string>
     <string name="pref_turn_screen_on">Turn screen on</string>
     <string name="pref_turn_screen_on_desc">When a SMS is received, turn the screen on</string>
+    <string name="turn_on_off">Turn on or off features</string>
 </resources>
