@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,20 +19,47 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        if(!pm.isScreenOn()) {
+        Log.d(TAG, "Received SMS");
+        if(!isScreenOn(context)) {
             Intent startIntent = new Intent(context, InvisibleActivity.class);
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(startIntent);
-            Log.d(TAG, "Received SMS");
+
         }
     }
 
+    /**
+     * Helper method retrieving the value of the 'screen on' state.
+     * The internal method used depends on the OS level
+     * @param context
+     * @return
+     */
+    @SuppressWarnings("deprecation")
+    private boolean isScreenOn(Context context) {
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            //Deprecated as of KITKAT_WATCH (20)
+            return pm.isScreenOn();
+        } else {
+            return pm.isInteractive();
+        }
+    }
+
+    /**
+     * Enables the reception of the SMS broadcast.
+     * @param context
+     */
     public static void enable(Context context) {
+        Log.d(TAG, "Enabling SMS receiver");
         changeReceiverState(context, PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
     }
 
+    /**
+     * Disables the reception of the SMS broadcast
+     * @param context
+     */
     public static void disable(Context context) {
+        Log.d(TAG, "Disabling SMS receiver");
         changeReceiverState(context, PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
     }
 

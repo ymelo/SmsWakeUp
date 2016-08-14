@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * Invisible activity, whose only purpose is to allow the app to turn the screen on.
+ * For this to happen, the activity is put on top (this app becomes the running app).
+ */
 public class InvisibleActivity extends Activity {
     private static final String TAG = "InvisibleActivity";
     private Handler mHandler;
