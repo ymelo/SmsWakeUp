@@ -29,23 +29,19 @@ public class SettingsActivity extends PreferenceActivity{
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class SmsPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
-        private static final int PERMISSION_REQUEST_WAKE_LOCK = 1;
-//        private static final int PERMISSION_REQUEST_READ_SMS = 10;
-//        private static final int PERMISSION_REQUEST_RECEIVE_SMS = 100;
+        private static final int PERMISSION_REQUEST = 1;
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
             ArrayList<String> permissionsRequested = new ArrayList<String>();
-            int wakePermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WAKE_LOCK);
-
-            if(wakePermission != PackageManager.PERMISSION_GRANTED) {
+            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED) {
                 permissionsRequested.add(Manifest.permission.WAKE_LOCK);
             }
-//            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-//                permissionsRequested.add(Manifest.permission.READ_SMS);
-//            }
+            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+                permissionsRequested.add(Manifest.permission.READ_SMS);
+            }
             if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
                 permissionsRequested.add(Manifest.permission.RECEIVE_SMS);
             }
@@ -53,14 +49,14 @@ public class SettingsActivity extends PreferenceActivity{
                 String[] permissions = permissionsRequested.toArray(new String[permissionsRequested.size()]);
                 ActivityCompat.requestPermissions(getActivity(),
                         permissions,
-                        PERMISSION_REQUEST_WAKE_LOCK);
+                        PERMISSION_REQUEST);
             }
         }
 
         @Override
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            if(requestCode == PERMISSION_REQUEST_WAKE_LOCK && grantResults.length > 0) {
+            if(requestCode == PERMISSION_REQUEST && grantResults.length > 0) {
                 boolean success = true;
                 for (int result: grantResults) {
                     if(result != PackageManager.PERMISSION_GRANTED) {
