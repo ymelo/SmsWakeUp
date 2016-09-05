@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
@@ -20,7 +21,6 @@ import java.util.Timer;
  * Created by yohann on 09/12/14.
  */
 public class SettingsActivity extends PreferenceActivity{
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,23 +34,6 @@ public class SettingsActivity extends PreferenceActivity{
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
-
-            ArrayList<String> permissionsRequested = new ArrayList<String>();
-            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED) {
-                permissionsRequested.add(Manifest.permission.WAKE_LOCK);
-            }
-            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                permissionsRequested.add(Manifest.permission.READ_SMS);
-            }
-            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                permissionsRequested.add(Manifest.permission.RECEIVE_SMS);
-            }
-            if(permissionsRequested.size() > 0) {
-                String[] permissions = permissionsRequested.toArray(new String[permissionsRequested.size()]);
-                ActivityCompat.requestPermissions(getActivity(),
-                        permissions,
-                        PERMISSION_REQUEST);
-            }
         }
 
         @Override
@@ -63,7 +46,6 @@ public class SettingsActivity extends PreferenceActivity{
                         //Woot
                     } else {
                         //Permission refused...
-
                     }
                 }
             } else {
@@ -93,12 +75,28 @@ public class SettingsActivity extends PreferenceActivity{
                     if(context != null) {
                         boolean activated = sharedPreferences.getBoolean(getString(R.string.pref_key_activated), false);
                         if(activated) {
-
+                            ArrayList<String> permissionsRequested = new ArrayList<String>();
+                            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WAKE_LOCK) != PackageManager.PERMISSION_GRANTED) {
+                                permissionsRequested.add(Manifest.permission.WAKE_LOCK);
+                            }
+                            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+                                permissionsRequested.add(Manifest.permission.READ_SMS);
+                            }
+                            if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+                                permissionsRequested.add(Manifest.permission.RECEIVE_SMS);
+                            }
+                            if(permissionsRequested.size() > 0) {
+                                String[] permissions = permissionsRequested.toArray(new String[permissionsRequested.size()]);
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        permissions,
+                                        PERMISSION_REQUEST);
+                            }
                             SmsReceiver.enable(context);
-                            if(BuildConfig.DEBUG && false) {
+                            if(BuildConfig.DEBUG && true) {
                                 Timer timer = new Timer();
                                 timer.schedule(new TestTimerTask(getActivity()), 5000);
                             }
+
                         } else {
                             SmsReceiver.disable(context);
                         }
