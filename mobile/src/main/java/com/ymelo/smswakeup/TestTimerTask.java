@@ -21,7 +21,9 @@ public class TestTimerTask extends TimerTask{
     public void run() {
         Intent intent = new Intent();
         intent.setAction("android.provider.Telephony.SMS_RECEIVED");
-        mContext.sendBroadcast(intent);
+//        mContext.sendBroadcast(intent);
+        SmsReceiver rec = new SmsReceiver();
+        rec.onReceive(mContext, intent);
 
     }
 }
